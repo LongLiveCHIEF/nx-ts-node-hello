@@ -1,109 +1,52 @@
-# SimpleTsNode
+So here's something that should be a simple challenge:
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+### NX Typescript server challenge
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+**Rules:**
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+- in a typescript preset workspace 
+- create a simple "hello world" application executed by node
+- written in typescript
+- must not use the `run-commands` executor for the `serve` task
+- must use `@nx/js:tsc` to compile (doesn't matter if it's inferred in the `nx.json`or explicitly configured in the projects' targets)
+- must not use `esbuild` or any other bundler
+- must not use express/next/any node server side framework
+- node application project must restart when a change is made to its source code
 
-## Generate a library
+**Alternative to starting from scratch**
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
-```
+Use this project as a starter, and convert the two nx projects into a single project, abiding by the limitations in the rules above.
 
-## Run tasks
+https://github.com/LongLiveCHIEF/nx-ts-node-hello
 
-To build the library use:
+### Purpose
 
-```sh
-npx nx build pkg1
-```
+What I'm trying to do here is bring awareness to what I believe is a missing fundamental in the NX js/node building blocks.
 
-To run any task with Nx use:
+This simple exercise is designed to simulate within an NX project, the typical "Hello World" day 1 beginner path of learning typescript and node, where you would:
 
-```sh
-npx nx <target> <project-name>
-```
+- write a `index.ts` file, 
+- run `tsc index.ts`, 
+- run `node index.js`
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+A while back @philipjfulcher posted a blog post about managing TypeScript monorepo's the right way, along with an excellent YouTube walkthrough.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+The applications he created though were solely for the web.
 
-## Versioning and releasing
+### Justification
 
-To version and release the library use
+Ever since then, I've had engineers trying to do this for applications for the _server_.
 
-```
-npx nx release
-```
+You would _think_ that it would be a simple matter to use _just_ the TypeScript compiler with Typescript configs and run that with node. 
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+However, I've found that it is essentially impossible to create a simple Hello World typescript server in nx, using the existing `nx/js` and `nx/node` plugins, without having to resort to using `run-commands`, or splitting up the application into a library and an application.
 
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+In the latter case, the task pipeline for `serve` in the application doesn't work well when changing the source code in the library project.
 
-## Keep TypeScript project references up to date
+### Reward
 
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
+If anyone can beat this challenge without having a Pull Request accepted in upstream NX, I will donate `$50 USD to the Open Source Software project of your choosing`.
 
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
-```
-
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
-
-```sh
-npx nx sync:check
-```
-
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
-
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
-```
-
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
-
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+First person to submit a challenge proof via NX discord or Merge Request on this project
+claims the reward.  Your merge request or message should indicate the project
+you want the donation to go to.
